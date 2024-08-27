@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zhylnama - Explore the History of Kazakhstan</title>
+    <link rel="stylesheet" href="https://unpkg.com/maplibre-gl/dist/maplibre-gl.css" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f1e4; /* Beige background */
+            color: #2f4f4f; /* Dark green text */
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #8fbc8f; /* Green header */
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 15px;
+        }
+
+        nav a {
+            color: #2f4f4f;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .content {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .content h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .content p {
+            font-size: 1.2em;
+            margin-bottom: 40px;
+            line-height: 1.5;
+        }
+
+        .map-container {
+            height: 50vh;
+            width: 80%;
+            margin: 0 auto;
+            border: 2px solid #8fbc8f;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="about.html">О нас</a>
+            <a href="https://wa.me/qr/KTO5PHH7H6XEF1">Связаться</a>
+        </nav>
+    </header>
+
+    <div class="content">
+        <h1>Узнайте историю Казахстана, изучая места на карте</h1>
+        <p>Мы предоставляем вам глубокое и разностороннее обучение истории Казахстана, облегчая доступ к ресурсам о раскопках и культурном наследии. С Zhylnama вы сможете легко найти информацию о древних цивилизациях и расширить свои знания о прошлом нашей страны.</p>
+
+        <div class="map-container" id="map"></div>
+    </div>
+
+    <script src="https://unpkg.com/maplibre-gl/dist/maplibre-gl.js"></script>
+    <script>
+        var map = new maplibregl.Map({
+            container: 'map',
+            style: 'https://api.maptiler.com/maps/d46300f3-f7e9-4dbf-88ae-7d4cbcf7f083/style.json?key=MrQ3bFzRYfctNzMhMm26',
+            center: [71.43385, 51.16952],
+            zoom: 5
+        });
+
+        var markers = [
+            {
+                "name": "Мемориальный комплекс «АЛЖИР»",
+                "description": "Мемориальный комплекс в <a href='alzhir.html'>Акмолинской области</a>.",
+                "coordinates": [71.60506, 51.35865],
+                "image": "https://religions-congress.org/data/media/news/images/7c22099ec1a584198dae5c53388fb135.jpg"
+            },
+            {
+                "name": "Музей имени Динмухамеда Кунаева",
+                "description": "Музей в <a href='kunayev.html'>Алматы</a>.",
+                "coordinates": [76.92089, 43.23798],
+                "image": "https://vlast.kz/media/upload/images/_J4A9076.jpg"
+            },
+            {
+                "name": "Мавзолей Ходжа Ахмед Яссави",
+                "description": "Историческое место в <a href='hodja-akhmed-yassavi.html'>Туркестане</a>.",
+                "coordinates": [68.24060, 43.27504],
+                "image": "https://www.akorda.kz/assets/media/kz3-2501.jpg"
+            },
+            {
+                "name": "Средневековой город Сарайчик",
+                "description": "Историческое городище <a href='sarajchik.html'>Сарайчик</a>.",
+                "coordinates": [68.40639, 48.38806],
+                "image": "https://culttourism.ru/data/photos/7/3/735bdfea8bdd0893413732c1b4d8d1f7.jpg"
+            },
+            {
+                "name": "Национальный музей Республики Казахстан",
+                "description": "Музей в <a href='national-museum.html'>Астане</a>.",
+                "coordinates": [71.43722, 51.16925],
+                "image": "https://religions-congress.org/data/media/news/images/b27ef6db85844471c76894729a2fb5b8.jpg"
+            }
+        ];
+
+        markers.forEach(function (marker) {
+            var el = document.createElement('div');
+            el.className = 'marker';
+            el.style.backgroundImage = 'url(' + marker.image + ')';
+
+            new maplibregl.Marker(el)
+                .setLngLat(marker.coordinates)
+                .setPopup(new maplibregl.Popup({ offset: 25 }).setHTML(
+                    `<h3>${marker.name}</h3>
+                    <p>${marker.description}</p>
+                    <img src="${marker.image}" alt="${marker.name}" style="width: 150px; height: auto;">`
+                ))
+                .addTo(map);
+        });
+    </script>
+</body>
+
+</html>
